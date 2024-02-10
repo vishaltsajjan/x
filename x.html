@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Owner's Prompt Storage</title>
+</head>
+
+<body>
+    <div style="text-align: center; padding: 50px;">
+        <h1>Welcome to the Prompt Website</h1>
+        <p>Enter your prompt below:</p>
+        <input type="text" id="userPrompt" placeholder="Type your prompt here">
+        <br>
+        <button onclick="submitPrompt()">Submit</button>
+        <br>
+        <button onclick="deletePrompts()">Delete Prompts</button>
+    </div>
+
+    <script>
+        function submitPrompt() {
+            var promptText = document.getElementById("userPrompt").value;
+            var timestamp = new Date().toLocaleString();
+            savePrompt(promptText, timestamp);
+            alert("Prompt submitted and saved: " + promptText + "\nTimestamp: " + timestamp);
+        }
+
+        function savePrompt(promptText, timestamp) {
+            // Retrieve existing prompts from local storage
+            var existingPrompts = JSON.parse(localStorage.getItem("userPrompts")) || [];
+
+            // Add the new prompt with timestamp to the array
+            existingPrompts.push({
+                prompt: promptText,
+                timestamp: timestamp
+            });
+
+            // Save the updated array back to local storage
+            localStorage.setItem("userPrompts", JSON.stringify(existingPrompts));
+        }
+
+        function deletePrompts() {
+            // Clear all prompts from local storage
+            localStorage.removeItem("userPrompts");
+            alert("Stored prompts have been deleted.");
+        }
+    </script>
+</body>
+
+</html>
